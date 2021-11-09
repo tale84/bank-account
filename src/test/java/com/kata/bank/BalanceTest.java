@@ -22,4 +22,13 @@ class BalanceTest {
 
         assertThat(newBalance.getAmount().getValue()).isEqualTo(new BigDecimal(10));
     }
+
+    @Test
+    public void should_soutract_10_from_balance_when_withdraw() {
+        Balance balance = new Balance(new Amount(new BigDecimal(20)));
+
+        Balance newBalance = balance.decrease(new Amount(new BigDecimal(10)));
+
+        assertThat(newBalance.getAmount().getValue()).isEqualTo(new BigDecimal(10));
+    }
 }

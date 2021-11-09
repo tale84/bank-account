@@ -28,4 +28,12 @@ public class AccountTest {
         assertThat(account.getBalance().getAmount().getValue()
         ).isEqualTo(new BigDecimal(10));
     }
+
+    @Test
+    void should_have_balance_10_when_withdraw_10_from_a_balance_20() {
+        Account account = new Account(new Balance(new Amount(new BigDecimal(20))));
+        Amount amount = new Amount(new BigDecimal(10));
+        account.withdraw(amount);
+        assertThat(account.getBalance().getAmount().getValue()).isEqualTo(new BigDecimal(10));
+    }
 }

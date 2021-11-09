@@ -15,4 +15,8 @@ public class Balance {
     public Balance increase(Amount amount) {
         return new Balance(this.amount.add(amount.value));
     }
+
+    public Balance decrease(Amount amount) {
+        return new Balance(this.amount.subtract(amount.value));
+    }
 }

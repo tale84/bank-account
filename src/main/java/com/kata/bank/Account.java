@@ -14,4 +14,8 @@ public class Account {
     public void deposit(Amount amount) {
         this.balance = this.balance.increase(amount);
     }
+
+    public void withdraw(Amount amount) {
+        this.balance = this.balance.decrease(amount);
+    }
 }

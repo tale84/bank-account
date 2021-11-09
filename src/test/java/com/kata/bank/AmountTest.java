@@ -1,6 +1,5 @@
 package com.kata.bank;
 
-import io.cucumber.java.bs.A;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -30,11 +29,27 @@ class AmountTest {
     }
 
     @Test
-    void should_throw_exception_when_amount_value_is_negative(){
+    void should_throw_exception_when_add_amount_negative(){
         Amount amount = new Amount(BigDecimal.ZERO);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
             amount.add(new BigDecimal(-10));
+        });
+    }
+
+    @Test
+    public void should_decrease_value_to_10_when_subtract_10_of_value_20() {
+        Amount amount = new Amount(new BigDecimal(20));
+
+        assertThat(amount.subtract(new BigDecimal(10)).getValue()).isEqualTo(new BigDecimal(10));
+    }
+
+    @Test
+    void should_throw_exception_when_subtract_amount_negative(){
+        Amount amount = new Amount(BigDecimal.ZERO);
+
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            amount.subtract(new BigDecimal(-10));
         });
     }
 }

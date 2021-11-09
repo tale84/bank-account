@@ -22,4 +22,12 @@ public class Amount {
             return new Amount(this.value.add(value));
         }
     }
+
+    public Amount subtract(BigDecimal value) {
+        if (value.signum()==-1) {
+            throw new IllegalArgumentException(AMOUNT_POSITIVE_WARN);
+        } else {
+            return new Amount(this.value.subtract(value));
+        }
+    }
 }
