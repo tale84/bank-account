@@ -1,16 +1,18 @@
 package com.kata.bank;
 
-import java.math.BigDecimal;
-
 public class Balance {
 
-    BigDecimal amount;
+    Amount amount;
 
-    public Balance(BigDecimal amount) {
+    public Balance(Amount amount) {
         this.amount = amount;
     }
 
-    public BigDecimal getAmount() {
+    public Amount getAmount() {
         return amount;
+    }
+
+    public Balance increase(Amount amount) {
+        return new Balance(this.amount.add(amount.value));
     }
 }

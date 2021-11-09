@@ -10,4 +10,8 @@ public class Account {
     public Balance getBalance() {
         return balance;
     }
+
+    public void deposit(Amount amount) {
+        this.balance = this.balance.increase(amount);
+    }
 }

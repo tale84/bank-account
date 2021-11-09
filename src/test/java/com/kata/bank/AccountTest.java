@@ -10,13 +10,22 @@ public class AccountTest {
 
     @Test
     void should_have_empty_balance_when_account_is_created(){
-        Account account = new Account(new Balance(BigDecimal.ZERO));
-        assertThat(account.getBalance().getAmount()).isEqualTo(BigDecimal.ZERO);
+        Account account = new Account(new Balance(new Amount(BigDecimal.ZERO)));
+        assertThat(account.getBalance().getAmount().getValue()).isEqualTo(BigDecimal.ZERO);
     }
 
     @Test
     void should_have_balance_of_10_when_create_account(){
-        Account account = new Account(new Balance(new BigDecimal(10)));
-        assertThat(account.getBalance().getAmount()).isEqualTo(new BigDecimal(10));
+        Account account = new Account(new Balance(new Amount(new BigDecimal(10))));
+        assertThat(account.getBalance().getAmount().getValue()).isEqualTo(new BigDecimal(10));
+    }
+
+    @Test
+    void should_have_balance_10_when_deposit_amount_10_in_empty_account(){
+        Account account = new Account(new Balance(new Amount(BigDecimal.ZERO)));
+        Amount amount = new Amount(new BigDecimal(10));
+        account.deposit(amount);
+        assertThat(account.getBalance().getAmount().getValue()
+        ).isEqualTo(new BigDecimal(10));
     }
 }
