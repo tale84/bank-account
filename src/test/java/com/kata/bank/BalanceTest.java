@@ -31,4 +31,13 @@ class BalanceTest {
 
         assertThat(newBalance.getAmount().getValue()).isEqualTo(new BigDecimal(10));
     }
+
+    @Test
+    public void should_generate_an_exception_when_withdraw_an_amount_under_the_balance() {
+        Balance balance = new Balance(new Amount(BigDecimal.ZERO));
+
+        assertThatExceptionOfType(RuntimeException.class).isThrownBy(()->{
+            balance.decrease(new Amount(new BigDecimal(10)));
+        });
+    }
 }

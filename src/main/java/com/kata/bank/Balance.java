@@ -6,6 +6,8 @@ public class Balance {
 
     Amount amount;
 
+    private static final String BALANCE_NOT_SUFFICIENT_INFO = "Client does not have a sufficient balance";
+
     public Balance(Amount amount) {
         this.amount = amount;
     }
@@ -19,7 +21,15 @@ public class Balance {
     }
 
     public Balance decrease(Amount amount) {
-        return new Balance(this.amount.subtract(amount.value));
+        if (isBalanceEnoughForWithdraw(amount)) {
+            return new Balance(this.amount.subtract(amount.value));
+        } else {
+            throw new RuntimeException(BALANCE_NOT_SUFFICIENT_INFO);
+        }
+    }
+
+    private boolean isBalanceEnoughForWithdraw(Amount amount) {
+        return this.amount.getValue().compareTo(amount.getValue()) >= 0;
     }
 
     @Override
