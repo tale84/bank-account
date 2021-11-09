@@ -28,4 +28,13 @@ class AmountTest {
 
         assertThat(amount.add(new BigDecimal(10)).getValue()).isEqualTo(new BigDecimal(10));
     }
+
+    @Test
+    void should_throw_exception_when_amount_value_is_negative(){
+        Amount amount = new Amount(BigDecimal.ZERO);
+
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            amount.add(new BigDecimal(-10));
+        });
+    }
 }

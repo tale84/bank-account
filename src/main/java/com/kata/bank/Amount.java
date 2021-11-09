@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 public class Amount {
     BigDecimal value;
 
+    private static final String AMOUNT_POSITIVE_WARN = "The amount must be positive";
+
     public Amount(BigDecimal value) {
         this.value = value;
     }
@@ -14,6 +16,10 @@ public class Amount {
     }
 
     public Amount add(BigDecimal value) {
-        return new Amount(this.value.add(value));
+        if (value.signum()==-1) {
+            throw new IllegalArgumentException(AMOUNT_POSITIVE_WARN);
+        } else {
+            return new Amount(this.value.add(value));
+        }
     }
 }
