@@ -43,4 +43,5 @@ public class Operation {
     public int hashCode() {
         return Objects.hash(operationType, amount, localDateTime);
     }
+
 }

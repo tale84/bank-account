@@ -35,4 +35,8 @@ public class Account {
         this.balance = this.balance.decrease(amount);
         statement.addOperation(new Operation(OperationType.WITHDRAW, amount, LocalDateTime.now(clock)), this.balance);
     }
+
+    public void printHistoryOfOperations() {
+        StatementPrinter.printHistoryOfOperations(this.statement);
+    }
 }
