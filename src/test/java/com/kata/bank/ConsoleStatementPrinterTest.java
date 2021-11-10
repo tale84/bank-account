@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.*;
 
-class StatementPrinterTest {
+class ConsoleStatementPrinterTest {
     Clock fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -38,7 +38,7 @@ class StatementPrinterTest {
         Account account = new Account(new Balance(new Amount(BigDecimal.ZERO)),fixedClock);
         account.deposit(new Amount(BigDecimal.TEN));
 
-        StatementPrinter.printHistoryOfOperations(account.getStatement());
+        account.printOperations(new ConsoleStatementPrinter());
 
         String expectedDate = LocalDateTime.now(fixedClock).format(formatter);
         String expectedOut = "| OPERATION | DATE | AMOUNT | BALANCE |\n| DEPOSIT | "+expectedDate+" | 10 | 10 |\n";
@@ -51,7 +51,7 @@ class StatementPrinterTest {
         Account account = new Account(new Balance(new Amount(new BigDecimal(20))),fixedClock);
         account.withdraw(new Amount(new BigDecimal(10)));
 
-        StatementPrinter.printHistoryOfOperations(account.getStatement());
+        account.printOperations(new ConsoleStatementPrinter());
 
         String expectedDate = LocalDateTime.now(fixedClock).format(formatter);
         String expectedOut = "| OPERATION | DATE | AMOUNT | BALANCE |\n| WITHDRAW | "+expectedDate+" | 10 | 10 |\n";

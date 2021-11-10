@@ -10,12 +10,12 @@ public class Account {
 
     public Account(Balance balance) {
         this.balance = balance;
-        this.clock=Clock.systemDefaultZone();
+        this.clock = Clock.systemDefaultZone();
     }
 
     public Account(Balance balance, Clock clock) {
         this.balance = balance;
-        this.clock=clock;
+        this.clock = clock;
     }
 
     public Balance getBalance() {
@@ -36,7 +36,7 @@ public class Account {
         statement.addOperation(new Operation(OperationType.WITHDRAW, amount, LocalDateTime.now(clock)), this.balance);
     }
 
-    public void printHistoryOfOperations() {
-        StatementPrinter.printHistoryOfOperations(this.statement);
+    public void printOperations(StatementPrinter statementPrinter) {
+        this.statement.printOperations(statementPrinter);
     }
 }

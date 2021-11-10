@@ -16,3 +16,6 @@ Feature: Testing operations on bank account
     When a withdraw of 50 is made in account
     When statement of deposit is printed
     Then console display operations
+      | OPERATION  | DATE             | AMOUNT | BALANCE |
+      | WITHDRAW   | 2021-11-10 00:00 | 50     | 50      |
+      | DEPOSIT    | 2021-11-10 00:00 | 100    | 100     |

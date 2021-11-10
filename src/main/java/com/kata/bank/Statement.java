@@ -11,7 +11,11 @@ public class Statement {
     }
 
     public void addOperation(Operation operation, Balance balance) {
-        statementLines.add(new StatementLine(operation, balance));
+        statementLines.add(0, new StatementLine(operation, balance));
+    }
+
+    public void printOperations(StatementPrinter statementPrinter) {
+        statementPrinter.printHistoryOfOperations(this);
     }
 
 }

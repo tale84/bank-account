@@ -1,6 +1,7 @@
 package cucumber;
 
 import com.kata.bank.*;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,6 +14,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,14 +50,15 @@ public class AccountStepDefinition {
     @When("^statement of deposit is printed$")
     public void statementOfDepositIsPrinted() {
         System.setOut(new PrintStream(outContent));
-        StatementPrinter.printHistoryOfOperations(account.getStatement());
+        account.printOperations(new ConsoleStatementPrinter());
     }
 
     @Then("^console display operations$")
-    public void consoleDisplayTheDepositOperation() {
+    public void consoleDisplayTheDepositOperation(DataTable dataTable) {
+        List<StatementLine> statementLines = formatDataTableToListOfStatement(dataTable);
         StringBuffer result = new StringBuffer();
         result.append("| OPERATION | DATE | AMOUNT | BALANCE |\n");
-        for (StatementLine statementLine : account.getStatement().getStatementLines()) {
+        for (StatementLine statementLine : statementLines) {
             result.append("| " + statementLine.getOperation().getOperationType().toString() +
                     " | " + LocalDateTime.now(fixedClock).format(formatter) +
                     " | " + statementLine.getOperation().getAmount().getValue() +
@@ -62,5 +66,16 @@ public class AccountStepDefinition {
         }
         assertThat(result.toString()).isEqualTo( outContent.toString());
         System.setOut(originalOut);
+    }
+
+    private List<StatementLine> formatDataTableToListOfStatement(DataTable dataTable) {
+        return dataTable.asMaps().stream().map(table -> {
+            LocalDateTime localDate = LocalDateTime.parse(table.get("DATE"), formatter);
+            Operation operation = new Operation(
+                    OperationType.valueOf(table.get("OPERATION")),
+                    new Amount(new BigDecimal(table.get("AMOUNT"))),
+                    localDate);
+            return new StatementLine(operation, new Balance(new Amount(new BigDecimal(table.get("BALANCE")))));
+        }).collect(Collectors.toList());
     }
 }
